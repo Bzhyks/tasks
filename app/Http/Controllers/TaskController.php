@@ -15,6 +15,10 @@ class TaskController extends Controller
     public function index()
     {
         //
+        $tasks = Task::all();
+        return view("tasks.index", [
+            'tasks' => $tasks
+        ]);
     }
 
     /**
@@ -25,6 +29,7 @@ class TaskController extends Controller
     public function create()
     {
         //
+        return view("tasks.create");
     }
 
     /**
@@ -35,7 +40,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new Task();
+        $task->name = $request->name;
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -57,7 +66,7 @@ class TaskController extends Controller
      */
     public function edit(task $task)
     {
-        //
+        return view("tasks.edit", ["task" => $task]);
     }
 
     /**
@@ -69,7 +78,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, task $task)
     {
-        //
+        $task->name = $request->name;
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -80,6 +92,11 @@ class TaskController extends Controller
      */
     public function destroy(task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('tasks.index');
+    }
+    public function darKazkas()
+    {
+        return "Cia is kontrolerio";
     }
 }
