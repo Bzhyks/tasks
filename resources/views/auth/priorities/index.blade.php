@@ -19,7 +19,7 @@
                             @foreach($priorities as $priority)
                             <tr>
                                 <td>{{$priority->name}}</td>
-                                <td style="width: 100px;" <a class="btn btn-success" href="{{route('priority.edit', $priority->id)}}">Edit</a>
+                                <td style="width: 100px;" <a class="btn btn-success" href="{{route('priorities.edit', $priority->id)}}">Edit</a>
                                 <td style="width: 100px;">
                                     <form method="POST" action="{{route('priorities.destroy', $priority->id)}}"></form>
                                     @csrf
