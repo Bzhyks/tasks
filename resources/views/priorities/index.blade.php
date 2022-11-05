@@ -19,12 +19,13 @@
                             @foreach($priorities as $priority)
                             <tr>
                                 <td>{{$priority->name}}</td>
-                                <td style="width: 100px;" <a class="btn btn-success" href="{{route('priorities.edit', $priority->id)}}">Edit</a>
+                                <td style="width: 100px;"> <a class="btn btn-success" href="{{route('priorities.edit', $priority->id)}}">Edit</a>
                                 <td style="width: 100px;">
-                                    <form method="POST" action="{{route('priorities.destroy', $priority->id)}}"></form>
-                                    @csrf
-                                    @method("DELETE")
-                                    <button class="btn btn-danger"> Delete</button>
+                                    <form method="POST" action="{{route('priorities.destroy', $priority->id)}}">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button class="btn btn-danger"> Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
