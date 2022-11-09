@@ -11,7 +11,7 @@ class task extends Model
 
     public function priority()
     {
-        return $this->belongsTo(Priority::class);
+        return $this->belongsTo(priority::class);
     }
     public function user()
     {

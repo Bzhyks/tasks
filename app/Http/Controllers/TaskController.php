@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\task;
 use Illuminate\Http\Request;
-use App\Models\Priority;
+use App\Models\priority;
 use App\Models\User;
 
 class TaskController extends Controller
