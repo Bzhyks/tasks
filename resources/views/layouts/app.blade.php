@@ -38,6 +38,12 @@
                         <li class="nav-item">
                             <a href="{{route('priorities.create')}}" class="nav-link">New Priority</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('tasks.index')}}" class="nav-link">Task List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('tasks.create')}}" class="nav-link">New Task</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

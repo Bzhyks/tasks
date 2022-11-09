@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\task;
 use Illuminate\Http\Request;
+use App\Models\Priority;
+use App\Models\User;
 
 class TaskController extends Controller
 {
@@ -28,8 +30,12 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
-        return view("tasks.create");
+        $priorities = Priority::all();
+        $users = User::all();
+        return view('tasks.create', [
+            'priorities' => $priorities,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -42,6 +48,10 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->name = $request->name;
+        $task->description = $request->description;
+        $task->status = $request->status;
+        $task->priority_id = $request->priority_id;
+        $task->user_id = $request->user_id;
         $task->save();
 
         return redirect()->route('tasks.index');
@@ -66,7 +76,13 @@ class TaskController extends Controller
      */
     public function edit(task $task)
     {
-        return view("tasks.edit", ["task" => $task]);
+        $priorities = Priority::all();
+        $users = User::all();
+        return view('tasks.edit', [
+            'task' => $task,
+            'priorities' => $priorities,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -79,6 +95,8 @@ class TaskController extends Controller
     public function update(Request $request, task $task)
     {
         $task->name = $request->name;
+        $task->description = $request->description;
+        $task->status = $request->status;
         $task->save();
 
         return redirect()->route('tasks.index');
@@ -94,9 +112,5 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->route('tasks.index');
-    }
-    public function darKazkas()
-    {
-        return "Cia is kontrolerio";
     }
 }
