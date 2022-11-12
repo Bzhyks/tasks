@@ -23,5 +23,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/tasks/search', [TaskController::class, 'search'])->name('tasks.search');
+Route::get('/tasks/search/reset', [TaskController::class, 'reset'])->name('tasks.search.reset');
+Route::post('/tasks/filter', [TaskController::class, 'filter'])->name('tasks.filter');
+
 Route::resource('priorities', PriorityController::class);
 Route::resource('tasks', TaskController::class);

@@ -18,12 +18,37 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $tasks = Task::all();
+        $search = $request->session()->get('task_search', null);
+        $filter_priority = $request->session()->get('priority_filter_task', null);
+
+        /*
+        if ($search==null && $filter_warehouse==null){
+            $products=Product::all();
+        }else{
+            $products=Product::orderBy('name');
+            if ($search!=null){
+                $products=$products->where('name','like',"%$search%");
+            }
+            if ($filter_warehouse!=null){
+                $products=$products->where('warehouse_id',$filter_warehouse);
+            }
+            $products=$products->get();
+        }
+        */
+
+        $tasks = Task::search($search)->fromPriority($filter_priority)->with('priority')->get();
+
+        $priorities = Priority::all();
+
         return view("tasks.index", [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'priorities' => $priorities,
+            'search' => $search,
+            'filter_priority' => $filter_priority
         ]);
     }
 
@@ -119,6 +144,25 @@ class TaskController extends Controller
     public function destroy(task $task)
     {
         $task->delete();
+        return redirect()->route('tasks.index');
+    }
+
+    public function search(Request $request)
+    {
+        $request->session()->put('task_search', $request->search);
+        return redirect()->route('tasks.index');
+    }
+
+    public function reset(Request $request)
+    {
+        $request->session()->put('task_search', null);
+        $request->session()->put('task_filter_priority', null);
+        return redirect()->route('tasks.index');
+    }
+
+    public function filter(Request $request)
+    {
+        $request->session()->put('priority_filter_task', $request->filter_priority);
         return redirect()->route('tasks.index');
     }
 }
