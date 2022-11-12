@@ -97,6 +97,8 @@ class TaskController extends Controller
         $task->name = $request->name;
         $task->description = $request->description;
         $task->status = $request->status;
+        $task->priority_id = $request->priority_id;
+        $task->user_id = $request->user_id;
         $task->save();
 
         return redirect()->route('tasks.index');
