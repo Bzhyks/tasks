@@ -7,15 +7,16 @@
             <div class="card">
                 <div class="card-header">New Task</div>
                 <div class="card-body">
+                    @include('tasks.error')
                     <form action="{{route('tasks.store')}}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="">Task Name</label>
-                            <input type="text" class="form-control" for="" name="name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name')  }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="">Description</label>
-                            <input type="text" class="form-control" for="" name="description">
+                            <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description')  }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="">Status</label>

@@ -7,16 +7,17 @@
             <div class="card">
                 <div class="card-header">Edit Task</div>
                 <div class="card-body">
+                    @include('tasks.error')
                     <form action="{{route('tasks.update',$task->id)}}" method="POST">
                         @csrf
                         @method("PUT")
                         <div class="mb-3">
                             <label class="form-label" for="">Task</label>
-                            <input type="text" class="form-control" for="" name="name" value="{{$task->name}}">
+                            <input type="text" class="form-control" name="name" value="{{ old('name', $task->name)  }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="">Description</label>
-                            <input type="text" class="form-control" for="" name="description" value="{{$task->description}}">
+                            <input type="text" class="form-control" name="description" value="{{ old('description', $task->description)  }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="">Status</label>

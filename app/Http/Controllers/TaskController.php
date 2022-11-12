@@ -9,6 +9,10 @@ use App\Models\User;
 
 class TaskController extends Controller
 {
+    private  $validationRules = [
+        'name' => ['required', 'min:3', 'max:64'],
+        'description' => ['max:512'],
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +50,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validationRules);
         $task = new Task();
         $task->name = $request->name;
         $task->description = $request->description;
@@ -94,6 +99,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, task $task)
     {
+        $request->validate($this->validationRules);
         $task->name = $request->name;
         $task->description = $request->description;
         $task->status = $request->status;

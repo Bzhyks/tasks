@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class PriorityController extends Controller
 {
+    private  $validationRules = [
+        'name' => ['required', 'min:3', 'max:64'],
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +41,7 @@ class PriorityController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validationRules);
         $priority = new Priority();
         $priority->name = $request->name;
         $priority->save();
@@ -78,6 +82,7 @@ class PriorityController extends Controller
      */
     public function update(Request $request, priority $priority)
     {
+        $request->validate($this->validationRules);
         $priority->name = $request->name;
         $priority->save();
         return redirect()->route('priorities.index');
