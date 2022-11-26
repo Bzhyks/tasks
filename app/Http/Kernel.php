@@ -2,6 +2,11 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ChangeAddressMiddleware;
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\LoadingMiddleware;
+use App\Http\Middleware\SetLanguageMiddleware;
+use App\Http\Middleware\SwearMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -21,6 +26,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // LoadingMiddleware::class
     ];
 
     /**
@@ -36,6 +42,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // ChangeAddressMiddleware::class,
+            SetLanguageMiddleware::class
         ],
 
         'api' => [
@@ -63,5 +71,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'loading' => LoadingMiddleware::class,
+        'isAdmin' => IsAdminMiddleware::class,
+        'swearMiddleware' => SwearMiddleware::class
     ];
 }

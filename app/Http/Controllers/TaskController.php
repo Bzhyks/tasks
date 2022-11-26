@@ -6,6 +6,7 @@ use App\Models\task;
 use Illuminate\Http\Request;
 use App\Models\priority;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -143,6 +144,11 @@ class TaskController extends Controller
      */
     public function destroy(task $task)
     {
+        // $task->delete();
+        // return redirect()->route('tasks.index');
+        if ($task->image) {
+            Storage::delete('app/' . $task->image);
+        }
         $task->delete();
         return redirect()->route('tasks.index');
     }
@@ -164,5 +170,54 @@ class TaskController extends Controller
     {
         $request->session()->put('priority_filter_task', $request->filter_priority);
         return redirect()->route('tasks.index');
+    }
+
+
+
+    public function addImage($id, Request $request)
+    {
+        $file = $request->file('image');
+        $imageName = $file->store('tasks');
+
+        $imageOriginalName = $file->getClientOriginalName();
+        $task = Task::find($id);
+        $task->image = $imageName;
+        $task->image_original = $imageOriginalName;
+        $task->save();
+
+
+        return redirect()->route('tasks.edit', $task->id);
+    }
+
+    public function showImage($id, Request $request)
+    {
+        $task = Task::find($id);
+        if ($task->image) {
+            $file = storage_path('app/' . $task->image);
+            return response()->file($file);
+        }
+        return redirect('/');
+    }
+    public function downloadImage($id, Request $request)
+    {
+        $task = Task::find($id);
+        if ($task->image) {
+            $file = storage_path('app/' . $task->image);
+            return response()->download($file, $task->image_original);
+        }
+        return redirect();
+    }
+
+    public function deleteImage($id, Request $request)
+    {
+        $task = Task::find($id);
+        if ($task->image) {
+            Storage::delete('app/' . $task->image);
+            $task->image = null;
+            $task->image_original = null;
+            $task->save();
+            return redirect()->route('tasks.edit', $task->id);
+        }
+        return redirect('/');
     }
 }

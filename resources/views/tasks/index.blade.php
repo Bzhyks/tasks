@@ -45,6 +45,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Task Picture</th>
                                 <th>Task</th>
                                 <th>Description</th>
                                 <th>Status</th>
@@ -56,6 +57,18 @@
                         <tbody>
                             @foreach($tasks as $task)
                             <tr>
+                                <td>
+
+                                    @if ($task->image!=null)
+                                    <div class="mb-2 text-center">
+                                        <img src="{{ route('task.showImage',$task->id) }}" width="100">
+                                    </div>
+                                    <!-- <div class="text-center">
+                                        <a href="{{ route('task.downloadImage',$task->id) }}" class="btn btn-success">Parsiųsti</a>
+                                    </div> -->
+                                    @endif
+
+                                </td>
                                 <td>{{$task->name}}</td>
                                 <td>{{$task->description}}</td>
                                 <td>{{$task->status}}</td>

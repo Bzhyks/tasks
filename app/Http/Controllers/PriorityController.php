@@ -15,7 +15,7 @@ class PriorityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $priorities = priority::all();
         return view("priorities.index", [

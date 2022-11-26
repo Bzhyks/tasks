@@ -32,19 +32,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @if ( Auth::user()!=null )
                         <li class="nav-item">
-                            <a href="{{route('priorities.index')}}" class="nav-link">Priorities List</a>
+                            <a href="{{route('priorities.index')}}" class="nav-link">{{__('Priorities List')}}</a>
                         </li>
+                        @if ( Auth::user()->type=='admin' )
                         <li class="nav-item">
-                            <a href="{{route('priorities.create')}}" class="nav-link">New Priority</a>
+                            <a href="{{route('priorities.create')}}" class="nav-link">{{__('New Priority')}}</a>
                         </li>
+                        @endif
                         <li class="nav-item">
-                            <a href="{{route('tasks.index')}}" class="nav-link">Task List</a>
+                            <a href="{{route('tasks.index')}}" class="nav-link">{{__('Task List')}}</a>
                         </li>
+                        @if ( Auth::user()->type=='admin' )
                         <li class="nav-item">
-                            <a href="{{route('tasks.create')}}" class="nav-link">New Task</a>
+                            <a href="{{route('tasks.create')}}" class="nav-link">{{__('New Task')}}</a>
                         </li>
+                        @endif
+                        @endif
                     </ul>
+                    <div class="float-end">
+
+                        <a href="{{ route('setLanguage','lt') }}" class="{{ \App::getLocale()=='lt'?'fw-bold':'' }}">LT</a> &nbsp; &nbsp;
+                        <a href="{{ route('setLanguage','en') }}" class="{{ \App::getLocale()=='en'?'fw-bold':'' }}">EN</a>
+
+                    </div>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

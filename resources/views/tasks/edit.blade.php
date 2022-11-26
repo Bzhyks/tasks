@@ -51,6 +51,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12 mt-4">
+            <div class="card">
+                <div class="card-header">Task Picture</div>
+                <div class="card-body">
+                    @if ($task->image==null)
+                    <form method="post" action="{{ route('tasks.addImage', $task->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label>Task Picture</label>
+                            <input type="file" name="image" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </form>
+                    @else
+                    <div class="mb-2 text-center">
+                        <img src="{{ route('task.showImage',$task->id) }}" width="200">
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ route('tasks.deleteImage', $task->id) }}" class="btn btn-danger">Delete</a>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ route('task.downloadImage',$task->id) }}" class="btn btn-success">Parsiųsti</a>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
 @endsection
